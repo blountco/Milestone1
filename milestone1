@@ -1,0 +1,10 @@
+##s(dna)
+def dna_count(dna):
+    d = {'A':0, 'C':0, 'G':0, 'T':0 }
+    dna = dna.upper()
+    d['A'] = dna.count('A')
+    d['C'] = dna.count('C')
+    d['G'] = dna.count('G')
+    d['T'] = dna.count('T')
+    return d
+print( dna_count('AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'))
