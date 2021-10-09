@@ -8,3 +8,166 @@ def dna_count(dna):
     d['T'] = dna.count('T')
     return d
 print( dna_count('AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC'))
+
+##dna2rna
+def dna2rna(dna):
+    rna = ''
+    for symbol in dna:
+        if symbol == 'A':
+            rna = rna + 'A'
+        elif symbol == 'T':
+            rna = rna + 'U'
+        elif symbol == 'G':
+            rna = rna + 'G'
+        else:
+            rna = rna + 'C'
+    return rna
+print( dna2rna( 'GATGGAACTTGACTACGTAAATT')) 
+
+##reverse_compliment(dna)
+def reverse_compliment(dna):
+    reverse = dna[::-1]
+    rc = ''
+    for symbol in reverse:
+        if symbol == 'A':
+            rc = rc + 'T'
+        elif symbol == 'T':
+            rc = rc + 'A'
+        elif symbol == 'G':
+            rc = rc + 'C'
+        else:
+            rc = rc + 'G'
+    return rc
+print(reverse_compliment('AAAACCCGGT'))
+
+###Mendel
+def mendels_law(hom, het, rec):
+    n = hom + het + rec
+    prob = (hom/n) + (het/(n**2-n))*(hom + 0.75*(het-1) + (rec/2)) + (rec/(n**2-n))*(hom + het/2)
+    return prob
+print( mendels_law(2,2,2))
+print( mendels_law(1,1,0))
+print(mendels_law(4, 0, 2))
+print( mendels_law(0,4,0))
+
+##fibonacci rabbits(n,k)
+def fibonacci_rabbits(n,k):
+    fiblist = []
+    if n-1 <= 1:
+         return 1
+    else:
+        return (fibonacci_rabbits(n-1,k) + k*fibonacci_rabbits(n-2,k))
+print(fibonacci_rabbits(1, 3))
+print(fibonacci_rabbits(2, 3))
+print(fibonacci_rabbits(3, 3))
+print(fibonacci_rabbits(4, 3))
+print(fibonacci_rabbits(5, 3))
+print(fibonacci_rabbits(6, 3))
+
+##gc_content(dna_list)
+def gc_content(dna):
+    problist = []
+    for string in dna:            #repeats following across each item in the list
+        c_count = string.count('C')       #counts C
+        g_count = string.count('G')         #counts G
+        gc_count = g_count + c_count          #put em together
+        probility = gc_count / len(string)   #percentage of total that is GC
+        problist.append(probility)               #adds percentage to list
+    maxgc = max(problist)                        #finds highest percentage in list
+    return problist.index(max(problist)),max(problist)             #returns the index of the highest prob as well as the highest prob
+x = ["CCTGCGGAAGATCGGCACTAGAATAGCCAGAACCGTTTCTCTGAGGCTTCCGGCCTTCCCTCCCACTAATAATTCTGAGG",
+ "CCATCGGTAGCGCATCCTTAGTCCAATTAAGTCCCTATCCAGGCGCTCCGCCGAAGGTCTATATCCATTTGTCAGCAGACACGC",
+ "CCACCCTCGTGGTATGGCTAGGCATTCAGGAACCGGAGAACGCTTCAGACCAGCCCGGACTGGGAACCTGCGGGCAGTAGGTGGAAT"]
+print(gc_content(x))
+
+#rna2codon(rna)
+def rna2codon(rna):
+    genetic_code = {
+        'UUU': 'F', 'UUC': 'F', 'UUA': 'L', 'UUG': 'L',        'CUU': 'L', 'CUC': 'L', 'CUA': 'L', 'CUG': 'L',
+        'AUU': 'I', 'AUC': 'I', 'AUA': 'I', 'AUG': 'M',        'GUU': 'V', 'GUC': 'V', 'GUA': 'V', 'GUG': 'V',
+
+        'UCU': 'S', 'UCC': 'S', 'UCA': 'S', 'UCG': 'S',        'CCU': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
+        'ACU': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',        'GCU': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
+
+        'UAU': 'Y', 'UAC': 'Y', 'UAA': '', 'UAG': '',        'CAU': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q',
+        'AAU': 'N', 'AAC': 'N', 'AAA': 'K', 'AAG': 'K',        'GAU': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
+
+        'UGU': 'C', 'UGC': 'C', 'UGA': '', 'UGG': 'W',        'CGU': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R',
+        'AGU': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',        'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
+    }
+    allowed_codons = set('ACGU')
+    return genetic_code.get(rna,'Invalid')
+def rna2codons(rna):
+    aminos = ''
+    for i in range( 0, int( len( rna ) / 3 ) ):
+        aminos += rna2codon(rna[3*i:3*i+3])    
+    return aminos
+print(rna2codons('AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA'))
+
+#locate_substring(dna_snippet, dna)
+def locate_substring(dna_snippet, dna):
+    position = []
+    snlen = len(dna_snippet)
+    dlen = len(dna)
+    for i in range(dlen - snlen +1):
+        if dna[i:snlen + i] == dna_snippet:
+            position.append(i)
+    return position
+print( locate_substring("ATAT","GATATATGCATATACTT") )
+
+##hamming_dist(dna1, dna2)
+def hamming_dist(dna1, dna2):
+    count = 0
+    for i in range(len(dna1)):
+        if dna1[i] != dna2[i]:
+            count += 1
+    return count
+print( hamming_dist("GAGCCTACTAACGGGAT","CATCGTAATGACGGCCT"))
+
+##count_dom_phenotype(genotypes)
+def count_dom_phenotype(genotypes):
+    domo = 2*(genotypes[0] + genotypes[1] + genotypes[2] + genotypes[3]*0.75 + genotypes[4]*0.5)
+    return domo
+x = [1,0,0,1,0,1]
+print( count_dom_phenotype(x))
+
+##splice_rna(dna, intron_list)
+def splice_rna(dna, intron_list):
+    rna = dna2rna(dna)
+    for i in intron_list:
+        intrna = dna2rna(i)
+        if intrna in rna:
+            rna = rna.replace(intrna,'')
+    return rna2codons(rna)
+        
+x = "ATGGTCTACATAGCTGACAAACAGCACGTAGCAATCGGTCGAATCTCGAGAGGCATATGGTCACATGATCGGTCGAGCGTGTTTCAAAGTTTGCGCCTAG"
+int_list = ["ATCGGTCGAA", "ATCGGTCGAGCGTGT"]
+print(splice_rna(x, int_list))
+
+#source_rna(protein)
+def source_rna(protein):
+    rnastring = 3
+    genetic_code = {
+        'UUU': 'F', 'UUC': 'F', 'UUA': 'L', 'UUG': 'L',        'CUU': 'L', 'CUC': 'L', 'CUA': 'L', 'CUG': 'L',
+        'AUU': 'I', 'AUC': 'I', 'AUA': 'I', 'AUG': 'M',        'GUU': 'V', 'GUC': 'V', 'GUA': 'V', 'GUG': 'V',
+
+        'UCU': 'S', 'UCC': 'S', 'UCA': 'S', 'UCG': 'S',        'CCU': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
+        'ACU': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',        'GCU': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
+
+        'UAU': 'Y', 'UAC': 'Y', 'UAA': '*', 'UAG': '*',        'CAU': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q',
+        'AAU': 'N', 'AAC': 'N', 'AAA': 'K', 'AAG': 'K',        'GAU': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
+
+        'UGU': 'C', 'UGC': 'C', 'UGA': '*', 'UGG': 'W',        'CGU': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R',
+        'AGU': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',        'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
+    }
+    keylist = genetic_code.keys()
+    valuelist = genetic_code.values()
+    valuestr = ''
+    for elm in valuelist:
+        valuestr += elm
+    for char in protein:
+        if char in valuelist:
+            num = valuestr.count(char)
+            rnastring *= num
+    return rnastring
+print(source_rna("CMDA"))
